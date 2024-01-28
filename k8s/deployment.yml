@@ -18,6 +18,18 @@ spec:
         - name: dispatcher-service
           image: dispatcher-service
           imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              port: 9003
+              path: /actuator/health/liveness
+            initialDelaySeconds: 20
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              port: 9003
+              path: /actuator/health/readiness
+            initialDelaySeconds: 20
+            periodSeconds: 10
           lifecycle:
             preStop:
               exec:
